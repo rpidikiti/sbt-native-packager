@@ -13,7 +13,8 @@ case class RpmMetadata(
     vendor: String,
     os: String,
     summary: String,
-    description: String) {
+    description: String,
+    scripts: String) {
 }
 
 /** 
@@ -136,8 +137,8 @@ case class RpmSpec(meta: RpmMetadata,
     // write build as moving everything into RPM directory.
     sb append installSection(tmpRoot)
     // TODO - Allow symlinks
-    // TODO - Allow scriptlets for installation
-    // "%prep", "%pretrans", "%pre", "%post", "%preun", "%postun", "%posttrans", "%verifyscript", "%clean"
+    sb append meta.scripts
+    sb append "\n\n"
     // Write file mappings
     sb append fileSection
     // TODO - Write triggers...

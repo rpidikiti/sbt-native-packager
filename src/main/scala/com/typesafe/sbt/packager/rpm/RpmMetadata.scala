@@ -14,8 +14,14 @@ case class RpmMetadata(
     os: String,
     summary: String,
     description: String,
-    scripts: String) {
+    scripts: RpmScripts) {
 }
+
+case class RpmScripts(
+    preInstall: Option[String] = None,
+    postInstall: Option[String] = None,
+    preRemove: Option[String] = None,
+    postRemove: Option[String] = None)
 
 /** 
  * The Description used to generate an RPM
@@ -106,6 +112,26 @@ case class RpmSpec(meta: RpmMetadata,
     sb append "fi\n"
     sb.toString
   }
+
+  def readRpmScript(key: String, script: String): String = {
+    val sb = new StringBuilder
+    sb append "\n"
+    sb append key
+    sb append "\n"
+    sb append scala.io.Source.fromFile(script).mkString
+    sb append "\n"
+    sb.toString
+  }
+
+  def rpmScripts(scripts: RpmScripts): String = {
+    val sb = new StringBuilder
+    sb append "\n"
+    scripts.preInstall foreach { s => sb append readRpmScript("pre", s) }
+    scripts.postInstall foreach { s => sb append readRpmScript("post", s) }
+    scripts.preRemove foreach { s => sb append readRpmScript("preun", s) }
+    scripts.postRemove foreach { s => sb append readRpmScript("postun", s) }
+    sb.toString
+  }
   
   // TODO - This is *very* tied to RPM helper, may belong *in* RpmHelper
   def writeSpec(rpmRoot: File, tmpRoot: File): String = {
@@ -137,7 +163,8 @@ case class RpmSpec(meta: RpmMetadata,
     // write build as moving everything into RPM directory.
     sb append installSection(tmpRoot)
     // TODO - Allow symlinks
-    sb append meta.scripts
+    sb append rpmScripts(meta.scripts)
+    // sb append meta.scripts
     sb append "\n\n"
     // Write file mappings
     sb append fileSection

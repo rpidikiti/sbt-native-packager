@@ -23,6 +23,7 @@ trait RpmPlugin extends Plugin with LinuxPlugin {
     rpmPrerequisites := Seq.empty,
     rpmObsoletes := Seq.empty,
     rpmConflicts := Seq.empty,
+    rpmSpecScripts := RpmScripts(),
     packageSummary in Rpm <<= packageSummary in Linux,
     target in Rpm <<= target(_ / "rpm")
   ) ++ inConfig(Rpm)(Seq(

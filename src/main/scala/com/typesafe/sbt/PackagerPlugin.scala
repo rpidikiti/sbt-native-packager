@@ -14,7 +14,6 @@ object SbtNativePackager extends Plugin
     with universal.UniversalPlugin {
 
   def packagerSettings = linuxSettings ++ 
-                         debianSettings ++ 
                          rpmSettings ++ 
                          universalSettings
   

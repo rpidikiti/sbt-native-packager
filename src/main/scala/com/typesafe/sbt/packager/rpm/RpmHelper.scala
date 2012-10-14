@@ -51,7 +51,7 @@ object RpmHelper {
   
   private[this] def writeSpecFile(spec: RpmSpec, workArea: File, log: sbt.Logger): File = {
     val specdir = workArea / "SPECS"
-    val rpmBuildroot = workArea / "buildroot"
+    val rpmBuildroot = workArea / "BUILDROOT"
     val tmpBuildRoot = workArea / "tmp-buildroot"
     val specfile = specdir / (spec.meta.name + ".spec")
     log.debug("Creating SPEC file: " + specfile.getAbsolutePath)
@@ -63,7 +63,7 @@ object RpmHelper {
       workArea: File, 
       spec: RpmSpec, 
       log: sbt.Logger): Unit = {
-    val buildRoot = workArea / "buildroot"
+    val buildRoot = workArea / "BUILDROOT"
     val specsDir = workArea / "SPECS"
     val gpg = false
     // TODO - Full GPG support (with GPG plugin).
@@ -84,7 +84,7 @@ object RpmHelper {
      }
   }
   
-  private[this] val topleveldirs = Seq("BUILD","RPMS","SOURCES","SPECS","SRPMS","tmp-buildroot","buildroot")
+  private[this] val topleveldirs = Seq("BUILD","RPMS","SOURCES","SPECS","SRPMS","tmp-buildroot","BUILDROOT")
   
   /** Builds the work area and returns the tmp build root, and rpm build root. */
   private[this] def buildWorkArea(workArea: File): Unit = {

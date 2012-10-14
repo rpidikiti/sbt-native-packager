@@ -37,7 +37,7 @@ trait RpmPlugin extends Plugin with LinuxPlugin {
     rpmSpecConfig <<=
       (rpmMetadata, rpmDescription, rpmDependencies, linuxPackageMappings) map RpmSpec,
     packageBin <<= (rpmSpecConfig, target, streams) map { (spec, dir, s) =>
-        RpmHelper.buildRpm(spec, dir, s.log)
+      RpmHelper.buildRpm(spec, dir, s.log)
     },
     rpmLint <<= (packageBin, streams) map { (rpm, s) =>
        (Process(Seq("rpmlint", "-v", rpm.getAbsolutePath)) ! s.log)  match {

@@ -104,7 +104,7 @@ case class RpmSpec(meta: RpmMetadata,
     sb append "then\n"
     sb append "  mv \""
     sb append root.getAbsolutePath
-    sb append "\"/* \"$RPM_BUILD_ROOT\"\n"
+    sb append "/*\" \"$RPM_BUILD_ROOT\"\n"
     sb append "else\n"
     sb append "  mv \""
     sb append root.getAbsolutePath
@@ -116,6 +116,7 @@ case class RpmSpec(meta: RpmMetadata,
   def readRpmScript(key: String, script: String): String = {
     val sb = new StringBuilder
     sb append "\n"
+    sb append "%"
     sb append key
     sb append "\n"
     sb append scala.io.Source.fromFile(script).mkString

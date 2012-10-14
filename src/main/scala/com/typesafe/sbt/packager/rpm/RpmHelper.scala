@@ -44,7 +44,7 @@ object RpmHelper {
       if file.isDirectory
       target = buildroot / dest
     } yield target)
-    log.debug("Directories in mappings: %s" format dir)
+    log.debug("Directories in mappings: %s" format dirs)
     IO.createDirectories(dirs)
     
     // We don't have to do any permission modifications since that's in the

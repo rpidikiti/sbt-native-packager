@@ -104,11 +104,11 @@ case class RpmSpec(meta: RpmMetadata,
     sb append "then\n"
     sb append "  mv \""
     sb append root.getAbsolutePath
-    sb append "\"/* \"$RPM_BUILD_ROOT\" || true\n"
+    sb append "\"/* \"$RPM_BUILD_ROOT\"\n"
     sb append "else\n"
     sb append "  mv \""
     sb append root.getAbsolutePath
-    sb append "\" \"$RPM_BUILD_ROOT\"\n || true"
+    sb append "\" \"$RPM_BUILD_ROOT\"\n"
     sb append "fi\n"
     sb.toString
   }

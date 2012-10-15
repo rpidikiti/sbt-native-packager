@@ -125,7 +125,7 @@ case class RpmSpec(meta: RpmMetadata,
     sb append "%"
     sb append key
     sb append "\n"
-    sb append 
+    sb append edited
     sb append "\n"
     sb.toString
   }

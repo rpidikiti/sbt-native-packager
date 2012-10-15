@@ -34,6 +34,7 @@ trait RpmKeys {
   // SPEC
   val rpmSpecConfig = TaskKey[RpmSpec]("rpm-spec-config", "All the configuration for an RPM .spec file.")
   val rpmSpecScripts = SettingKey[RpmScripts]("rpm-spec-scripts", "Pre/Post scripts")
+  val rpmInstallDir = SettingKey[String]("rpm-install-dir", "The directory where the application will be installed.")
 
   // Building
   val rpmLint = TaskKey[Unit]("rpm-lint", "Runs rpmlint program against the genreated RPM, if available.")

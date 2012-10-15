@@ -23,13 +23,14 @@ trait RpmPlugin extends Plugin with LinuxPlugin {
     rpmPrerequisites := Seq.empty,
     rpmObsoletes := Seq.empty,
     rpmConflicts := Seq.empty,
+    rpmInstallDir <<= (name in Rpm)("/usr/share/"+_),
     rpmSpecScripts := RpmScripts(),
     packageSummary in Rpm <<= packageSummary in Linux,
     target in Rpm <<= target(_ / "rpm")
   ) ++ inConfig(Rpm)(Seq(
     packageArchitecture := "noarch",
     rpmMetadata <<=
-      (name, version, rpmRelease, packageArchitecture, rpmVendor, rpmOs, packageSummary, packageDescription, rpmSpecScripts) apply (RpmMetadata.apply),
+      (name, version, rpmRelease, packageArchitecture, rpmVendor, rpmOs, packageSummary, packageDescription, rpmInstallDir, rpmSpecScripts) apply (RpmMetadata.apply),
     rpmDescription <<=
       (rpmLicense, rpmDistribution, rpmUrl, rpmGroup, rpmPackager, rpmIcon) apply RpmDescription,
     rpmDependencies <<=

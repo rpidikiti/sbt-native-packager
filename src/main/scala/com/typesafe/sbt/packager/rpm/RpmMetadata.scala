@@ -14,6 +14,7 @@ case class RpmMetadata(
     os: String,
     summary: String,
     description: String,
+    installdir: String,
     scripts: RpmScripts) {
 }
 
@@ -115,11 +116,16 @@ case class RpmSpec(meta: RpmMetadata,
 
   def readRpmScript(key: String, script: String): String = {
     val sb = new StringBuilder
+    val content = scala.io.Source.fromFile(script).mkString
+    val edited = (content
+                    replace("%{installdir}", meta.installdir)
+                    replace("%{name}", meta.name)
+                    replace("%{version}", meta.version))
     sb append "\n"
     sb append "%"
     sb append key
     sb append "\n"
-    sb append scala.io.Source.fromFile(script).mkString
+    sb append 
     sb append "\n"
     sb.toString
   }

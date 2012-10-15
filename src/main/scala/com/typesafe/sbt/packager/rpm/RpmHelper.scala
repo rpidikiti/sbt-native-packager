@@ -32,11 +32,6 @@ object RpmHelper {
       else IO.copyFile(from, to, true)
     }
 
-    spec.mappings foreach { mapping =>
-      mapping.mappings foreach { m =>
-        log.debug("mapping: %s" format m)
-      }
-    }
     // First make sure directories are there....
     val dirs = (for { 
       mapping <- spec.mappings
@@ -49,12 +44,24 @@ object RpmHelper {
     
     // We don't have to do any permission modifications since that's in the
     // the .spec file.
-    for { 
-      mapping <- spec.mappings
-      (file, dest) <- mapping.mappings
-      if file.exists && !file.isDirectory()
-      target = buildroot / dest
-    } copyWithZip(file, target, mapping.zipped)
+    // for { 
+    //   mapping <- spec.mappings
+    //   (file, dest) <- mapping.mappings
+    //   if file.exists && !file.isDirectory()
+    //   target = buildroot / dest
+    // } copyWithZip(file, target, mapping.zipped)
+
+    spec.mappings foreach { mapping =>
+      mapping.mappings foreach { case (file, dest) =>
+        log.debug("mapping: %s" format (file, buildroot / dest))
+        if (file.exists && !file.isDirectory)
+          copyWithZip(file, buildroot / dest, mapping.zipped)
+        else if (!file.exists)
+          log.warn("file: " + file + " does not exist.")
+        else
+          log.debug("skipping: " + file + " because it is a directory.")
+      }
+    }
   }
   
   private[this] def writeSpecFile(spec: RpmSpec, workArea: File, log: sbt.Logger): File = {

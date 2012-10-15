@@ -102,13 +102,13 @@ case class RpmSpec(meta: RpmMetadata,
     sb append "%install\n"
     sb append "if [ -e \"$RPM_BUILD_ROOT\" ]; "
     sb append "then\n"
-    sb append "  mv \""
+    sb append "  mv "
     sb append root.getAbsolutePath
-    sb append "/*\" \"$RPM_BUILD_ROOT\"\n"
+    sb append "/* \"$RPM_BUILD_ROOT\"\n"
     sb append "else\n"
-    sb append "  mv \""
+    sb append "  mv "
     sb append root.getAbsolutePath
-    sb append "\" \"$RPM_BUILD_ROOT\"\n"
+    sb append " \"$RPM_BUILD_ROOT\"\n"
     sb append "fi\n"
     sb.toString
   }

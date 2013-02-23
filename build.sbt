@@ -2,7 +2,7 @@ sbtPlugin := true
 
 name := "sbt-native-packager"
 
-organization := "com.typesafe.sbt"
+organization := "com.kp.sbt"
 
 version := "0.5.0"
 

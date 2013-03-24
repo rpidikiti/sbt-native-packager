@@ -21,6 +21,8 @@ ghpages.settings
 
 git.remoteRepo := "git@github.com:sbt/sbt-native-packager.git"
 
-publishTo := Some(Resolver.url("sbt-plugin-releases", new URL("http://scalasbt.artifactoryonline.com/scalasbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns))
+publishTo := Some(Resolver.url("Sara Ivy", url("http://www.saraframework.com/artifactory/ivy"))(Resolver.ivyStylePatterns))
+
+credentials ++= Seq(Credentials("Sara Server", "www.saraframework.com", "saradeveloper", "teamkp"))
 
 publishMavenStyle := false
